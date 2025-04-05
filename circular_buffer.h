@@ -19,7 +19,7 @@ struct Circbuf *circbuf_alloc(int len);
 void circbuf_free(struct Circbuf *cb);
 int circbuf_push(struct Circbuf *cb, char data);
 int circbuf_pop(struct Circbuf *cb, char *data);
-int circbuf_copy(struct Circbuf *cb, char *src, int n);
+int circbuf_push_from_linear(struct Circbuf *cb, char *src, int n);
 void circbuf_empty(struct Circbuf *cb);
 int circbuf_len(struct Circbuf * cb);
 int circbuf_size(struct Circbuf *cb);

@@ -14,8 +14,8 @@ int main() {
     printf("Initial status\n");
     circbuf_print_data(cb);
 
-    printf("\nCopy data (5 elements should be copied)\n");
-    assert(circbuf_copy(cb, str, sizeof(str)) == cb->size - 1);
+    printf("\nPush data (5 elements should be pushed)\n");
+    assert(circbuf_push_from_linear(cb, str, sizeof(str)) == cb->size - 1);
     
     circbuf_print_data(cb);
 
@@ -25,15 +25,15 @@ int main() {
 
     circbuf_print_data(cb);
 
-    printf("\nCopy data (3 elements should be copied)\n");
-    assert(circbuf_copy(cb, str, 3) == 3);
+    printf("\nPush data (3 elements should be pushed)\n");
+    assert(circbuf_push_from_linear(cb, str, 3) == 3);
 
     circbuf_print_data(cb);
 
     printf("\nSpace left: %d\n", circbuf_space_left(cb));
 
-    printf("\nCopy data (2 elements should be copied)\n");
-    assert(circbuf_copy(cb, str+8, 8) == 2);
+    printf("\nPush data (2 elements should be pushed)\n");
+    assert(circbuf_push_from_linear(cb, str+8, 8) == 2);
 
     circbuf_print_data(cb);
 

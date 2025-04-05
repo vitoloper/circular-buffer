@@ -61,12 +61,12 @@ int circbuf_pop(struct Circbuf *cb, char *data) {
     return 1;
 }
 
-/* Copy n elements from src to cb. */
-int circbuf_copy(struct Circbuf *cb, char *src, int n) {
+/* Push n elements from src linear array to cb. */
+int circbuf_push_from_linear(struct Circbuf *cb, char *src, int n) {
     int i;
 
     for (i = 0; i < n && i < cb->size-1; i++) {
-        /* Copy element and check if copy was successful. */
+        /* Push element and check if successful. */
         if (circbuf_push(cb, src[i]) == 0) return i;
     }
 
