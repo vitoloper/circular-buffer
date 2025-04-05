@@ -10,6 +10,7 @@
 int main() {
     struct Circbuf *cb = circbuf_alloc(6);
     char *str = "Thequickbrownfoxjumpsoverthelazydog";
+    char tmpbuf[6];
 
     printf("Initial status\n");
     circbuf_print_data(cb);
@@ -38,7 +39,14 @@ int main() {
     circbuf_print_data(cb);
 
     printf("\nSpace left: %d\n", circbuf_space_left(cb));
+
+    printf("\nPop 4 elements\n");
+    assert(circbuf_pop_to_linear(tmpbuf, cb, 4) == 4);
+    tmpbuf[4] = '\0';
+    printf("tmpbuf: %s\n\n", tmpbuf);
     
+    circbuf_print_data(cb);
+
     circbuf_free(cb);
     return 0;
 }

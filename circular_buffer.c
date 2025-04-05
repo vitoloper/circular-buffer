@@ -70,7 +70,20 @@ int circbuf_push_from_linear(struct Circbuf *cb, char *src, int n) {
         if (circbuf_push(cb, src[i]) == 0) return i;
     }
 
-    /* Return the number of copied elements. */
+    /* Return the number of elements. */
+    return i;
+}
+
+/* Pop n elements from cb to dest linear array. */
+int circbuf_pop_to_linear(char *dest, struct Circbuf *cb, int n) {
+    int i = n;
+
+    for(i = 0; i < n; i++) {
+        /* Pop element and check if successful. */
+        if (circbuf_pop(cb, &dest[i]) == 0) return i;
+    }
+
+    /* Return the number of elements. */
     return i;
 }
 
