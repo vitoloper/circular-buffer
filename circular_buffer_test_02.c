@@ -30,14 +30,14 @@ int main() {
 
     circbuf_print_data(cb);
 
-    printf("\nLeft space: %d\n", circbuf_left_space(cb));
+    printf("\nSpace left: %d\n", circbuf_space_left(cb));
 
     printf("\nCopy data (2 elements should be copied)\n");
     assert(circbuf_copy(cb, str+8, 8) == 2);
 
     circbuf_print_data(cb);
 
-    printf("\nLeft space: %d\n", circbuf_left_space(cb));
+    printf("\nSpace left: %d\n", circbuf_space_left(cb));
     
     circbuf_free(cb);
     return 0;
