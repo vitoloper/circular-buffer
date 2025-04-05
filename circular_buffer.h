@@ -23,6 +23,7 @@ int circbuf_copy(struct Circbuf *cb, char *src, int n);
 void circbuf_empty(struct Circbuf *cb);
 int circbuf_len(struct Circbuf * cb);
 int circbuf_size(struct Circbuf *cb);
+int circbuf_left_space(struct Circbuf *cb);
 void circbuf_print_data(struct Circbuf *cb);
 
 #endif // CIRCBUFLIB_H

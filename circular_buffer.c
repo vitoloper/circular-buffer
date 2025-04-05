@@ -95,6 +95,11 @@ int circbuf_size(struct Circbuf *cb) {
     return cb->size;
 }
 
+/* Get buffer remaining space. */
+int circbuf_left_space(struct Circbuf *cb) {
+    return cb->size - 1 - circbuf_len(cb);
+}
+
 /* Print buffer data, indices and size. */
 void circbuf_print_data(struct Circbuf *cb) {
     int i;
