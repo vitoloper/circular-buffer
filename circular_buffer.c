@@ -87,6 +87,26 @@ int circbuf_pop_to_linear(char *dest, struct Circbuf *cb, int n) {
     return i;
 }
 
+/* Copy n elements from cb to dest */
+int circbuf_copy_to_linear(char *dest, struct Circbuf *cb, int n) {
+    int i;
+    int len = circbuf_len(cb);
+    int read_idx = cb->read_idx;
+
+    if (n > len) {
+        return -1;
+    }
+
+    for (i = 0; i < n; i++) {
+        /* Read data and increment read_idx. */
+        dest[i] = cb->buf[read_idx];
+        read_idx = (read_idx + 1) % cb->size;
+    }
+
+    /* Return the number of copied elements. */
+    return i;
+}
+
 /* Empty buffer. */
 void circbuf_empty(struct Circbuf *cb) {
     cb->read_idx = cb->write_idx;

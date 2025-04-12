@@ -21,6 +21,7 @@ int circbuf_push(struct Circbuf *cb, char data);
 int circbuf_pop(struct Circbuf *cb, char *data);
 int circbuf_push_from_linear(struct Circbuf *cb, char *src, int n);
 int circbuf_pop_to_linear(char *dest, struct Circbuf *cb, int n);
+int circbuf_copy_to_linear(char *dest, struct Circbuf *cb, int n);
 void circbuf_empty(struct Circbuf *cb);
 int circbuf_len(struct Circbuf * cb);
 int circbuf_size(struct Circbuf *cb);

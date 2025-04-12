@@ -20,6 +20,15 @@ int main() {
     
     circbuf_print_data(cb);
 
+    printf("\nCopy 5 elements in another buffer\n");
+    assert(circbuf_copy_to_linear(tmpbuf, cb, 5) == 5);
+    printf("tmpbuf: %s\n", tmpbuf);
+
+    printf("\nCopy 6 elements in another buffer (should return -1)\n");
+    int retval;
+    assert((retval = circbuf_copy_to_linear(tmpbuf, cb, 6)) == -1);
+    printf("retval: %d\n", retval);
+
     printf("\nEmpty buffer\n");
     circbuf_empty(cb);
     assert(circbuf_len(cb) == 0);
