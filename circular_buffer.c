@@ -76,7 +76,7 @@ int circbuf_push_from_linear(struct Circbuf *cb, char *src, int n) {
 
 /* Pop n elements from cb to dest linear array. */
 int circbuf_pop_to_linear(char *dest, struct Circbuf *cb, int n) {
-    int i = n;
+    int i;
 
     for(i = 0; i < n; i++) {
         /* Pop element and check if successful. */
