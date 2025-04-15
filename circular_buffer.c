@@ -1,5 +1,5 @@
 /*
- * Circular buffer.
+ * Circular buffer library.
  * 
  * Copyright (c) 2025 vitoloper
  * 
@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 /* Allocate circular buffer. */
-struct Circbuf *circbuf_alloc(int size) {
+struct Circbuf *circbuf_alloc(size_t size) {
     /* Allocate space for struct */
     struct Circbuf *cb = (struct Circbuf *)malloc(sizeof(struct Circbuf));
     
@@ -30,7 +30,7 @@ void circbuf_free(struct Circbuf *cb) {
 }
 
 /* Insert (push) an element. */
-int circbuf_push(struct Circbuf *cb, char data) {
+size_t circbuf_push(struct Circbuf *cb, char data) {
     /* Check if buffer is full. */
     if ((cb->write_idx + 1) % (cb->size) == cb->read_idx) {
         return 0;
@@ -46,7 +46,7 @@ int circbuf_push(struct Circbuf *cb, char data) {
 }
 
 /* Read (pop) an element. */
-int circbuf_pop(struct Circbuf *cb, char *data) {
+size_t circbuf_pop(struct Circbuf *cb, char *data) {
     /* Check if buffer is empty. */
     if(cb->read_idx == cb->write_idx) {
         return 0;
@@ -62,8 +62,8 @@ int circbuf_pop(struct Circbuf *cb, char *data) {
 }
 
 /* Push n elements from src linear array to cb. */
-int circbuf_push_from_linear(struct Circbuf *cb, char *src, int n) {
-    int i;
+size_t circbuf_push_from_linear(struct Circbuf *cb, char *src, size_t n) {
+    size_t i;
 
     for (i = 0; i < n && i < cb->size-1; i++) {
         /* Push element and check if successful. */
@@ -75,8 +75,8 @@ int circbuf_push_from_linear(struct Circbuf *cb, char *src, int n) {
 }
 
 /* Pop n elements from cb to dest linear array. */
-int circbuf_pop_to_linear(char *dest, struct Circbuf *cb, int n) {
-    int i;
+size_t circbuf_pop_to_linear(char *dest, struct Circbuf *cb, size_t n) {
+    size_t i;
 
     for(i = 0; i < n; i++) {
         /* Pop element and check if successful. */
@@ -87,17 +87,13 @@ int circbuf_pop_to_linear(char *dest, struct Circbuf *cb, int n) {
     return i;
 }
 
-/* Copy n elements from cb to dest */
-int circbuf_copy_to_linear(char *dest, struct Circbuf *cb, int n) {
-    int i;
-    int len = circbuf_len(cb);
-    int read_idx = cb->read_idx;
+/* Copy n elements from cb to dest (copy at most circbuf_len() elements). */
+size_t circbuf_copy_to_linear(char *dest, struct Circbuf *cb, size_t n) {
+    size_t i;
+    size_t len = circbuf_len(cb);
+    size_t read_idx = cb->read_idx;
 
-    if (n > len) {
-        return -1;
-    }
-
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n && i < len; i++) {
         /* Read data and increment read_idx. */
         dest[i] = cb->buf[read_idx];
         read_idx = (read_idx + 1) % cb->size;
@@ -113,7 +109,7 @@ void circbuf_empty(struct Circbuf *cb) {
 }
 
 /* Get buffer length (number of stored elements). */
-int circbuf_len(struct Circbuf * cb) {
+size_t circbuf_len(struct Circbuf * cb) {
     if (cb->write_idx == cb->read_idx) {
         return 0;
     } else if (cb->write_idx > cb->read_idx) {
@@ -124,25 +120,25 @@ int circbuf_len(struct Circbuf * cb) {
 }
 
 /* Get buffer size. */
-int circbuf_size(struct Circbuf *cb) {
+size_t circbuf_size(struct Circbuf *cb) {
     return cb->size;
 }
 
 /* Get buffer remaining space. */
-int circbuf_space_left(struct Circbuf *cb) {
+size_t circbuf_space_left(struct Circbuf *cb) {
     return cb->size - 1 - circbuf_len(cb);
 }
 
 /* Print buffer data, indices and size. */
 void circbuf_print_data(struct Circbuf *cb) {
-    int i;
-    int cb_len = circbuf_len(cb);
-    int read_idx = cb->read_idx;
+    size_t i;
+    size_t cb_len = circbuf_len(cb);
+    size_t read_idx = cb->read_idx;
 
-    printf("write_idx: %d\n",cb->write_idx);
-    printf("read_idx: %d\n", cb->read_idx);
-    printf("length: %d\n", cb_len);
-    printf("size: %d\n", cb->size);
+    printf("write_idx: %lu\n",cb->write_idx);
+    printf("read_idx: %lu\n", cb->read_idx);
+    printf("length: %lu\n", cb_len);
+    printf("size: %lu\n", cb->size);
 
     printf("Data: ");
     if (cb_len == 0) {

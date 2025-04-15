@@ -20,14 +20,16 @@ int main() {
     
     circbuf_print_data(cb);
 
-    printf("\nCopy 5 elements in another buffer\n");
-    assert(circbuf_copy_to_linear(tmpbuf, cb, 5) == 5);
+    printf("\nCopy 3 elements in another buffer\n");
+    assert(circbuf_copy_to_linear(tmpbuf, cb, 3) == 3);
     printf("tmpbuf: %s\n", tmpbuf);
 
-    printf("\nCopy 6 elements in another buffer (should return -1)\n");
+    printf("\nTry to copy 10 elements in another buffer (should return 5 \
+because we have 5 elements in circular buffer)\n");
     int retval;
-    assert((retval = circbuf_copy_to_linear(tmpbuf, cb, 6)) == -1);
+    assert((retval = circbuf_copy_to_linear(tmpbuf, cb, 10)) == 5);
     printf("retval: %d\n", retval);
+    printf("tmpbuf: %s\n", tmpbuf);
 
     printf("\nEmpty buffer\n");
     circbuf_empty(cb);
@@ -40,14 +42,14 @@ int main() {
 
     circbuf_print_data(cb);
 
-    printf("\nSpace left: %d\n", circbuf_space_left(cb));
+    printf("\nSpace left: %lu\n", circbuf_space_left(cb));
 
     printf("\nPush data (2 elements should be pushed)\n");
     assert(circbuf_push_from_linear(cb, str+8, 8) == 2);
 
     circbuf_print_data(cb);
 
-    printf("\nSpace left: %d\n", circbuf_space_left(cb));
+    printf("\nSpace left: %lu\n", circbuf_space_left(cb));
 
     printf("\nPop 4 elements\n");
     assert(circbuf_pop_to_linear(tmpbuf, cb, 4) == 4);
